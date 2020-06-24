@@ -1,0 +1,17 @@
+ns foo = {
+   struct p {
+      scalar x;
+      scalar y;
+   }
+}
+
+ns bar = {
+   struct p {
+      int x;
+      int y;
+   }
+}
+
+kn main() int {
+   0
+}

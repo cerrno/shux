@@ -1,0 +1,11 @@
+ns foo = {
+   ns bar = {
+      let int a = 0;
+   }
+
+   let int a = 1;
+}
+
+kn main() int {
+   0
+}

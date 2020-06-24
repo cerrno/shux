@@ -1,0 +1,13 @@
+struct particle {
+   scalar x;
+   scalar y;
+}
+
+struct particle {
+   int x;
+   string y;
+}
+
+kn main() int {
+   0
+}

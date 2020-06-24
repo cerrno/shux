@@ -1,0 +1,7 @@
+kn main() int {
+   ns bad = {
+      int x = 5;
+      int y = 6;
+   }
+   0
+}

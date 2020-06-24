@@ -1,0 +1,4 @@
+kn main() int {
+   vector<2> g = (1, 2);
+   0
+}

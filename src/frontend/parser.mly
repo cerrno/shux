@@ -6,8 +6,8 @@
 %token SEMI COMMA DOTDOT DOT PLUS MINUS TIMES DIVIDE MOD EXPONENT
 %token ASSIGN ADD_ASN SUB_ASN MUL_ASN DIV_ASN MOD_ASN EXP_ASN
 %token LOG_AND LOG_OR LOG_NOT LT GT EQ NEQ LEQ GEQ
-%token QUES COLON FILTER MAP FUNC IF THEN ELIF ELSE FOR WHILE DO UNDERSCORE
-%token NS GN KN STRUCT LET EXTERN VAR INT_T FLOAT_T STRING_T BOOL_T VECTOR_T PTR_T
+%token QUES COLON FILTER MAP ARROW IF THEN ELIF ELSE FOR WHILE DO UNDERSCORE
+%token NS GN KN STRUCT LET EXTERN VAR INT_T FLOAT_T STRING_T BOOL_T VECTOR_T PTR_T PASS
 
 %token <bool> BOOL_LIT
 %token <int> INT_LIT
@@ -118,19 +118,20 @@ if_expr:
 fn_expr:
   | iter_expr fn_op kns                     { Binop($1, $2, $3) } 
   | iter_expr                               { $1 } 
+  | PASS                                    { Call(Some ["nop"],[])  } 
 
 kns:
   | kn fn_op kns                            { Binop($1, $2, $3) }
   | kn                                      { $1 }
 
 kn:
-  | id                                      { $1 }
+  | id_ns                                      { Id($1) }
   | lambda                                  { Lit($1) }
 
 lambda:
-  | LPAREN formals RPAREN FUNC 
+  | LPAREN formals RPAREN ARROW 
     LBRACE statements ret_expr RBRACE       { LitKn({lformals = $2; lbody = List.rev $6; lret_expr = $7}) } 
-  | LPAREN formals RPAREN FUNC 
+  | LPAREN formals RPAREN ARROW 
     LBRACE ret_expr RBRACE                  { LitKn({lformals = $2; lbody = []; lret_expr = $6}) } 
 
 iter_expr:
@@ -138,7 +139,7 @@ iter_expr:
   | unit_expr                               { $1 }
 
 gn_call:
-  | ID LPAREN actuals RPAREN                { Call(Some($1), $3) }
+  | id_ns LPAREN actuals RPAREN             { Call(Some($1), $3) }
   | UNDERSCORE                              { Call(None, []) }
 
 unit_expr:
@@ -187,7 +188,7 @@ unary_expr:
 
 postfix_expr:
   | postfix_expr LBRACK expr RBRACK         { Binop($1, Index, $3) }
-  | ID LPAREN actuals RPAREN                { Call(Some($1), $3) }
+  | id_ns LPAREN actuals RPAREN             { Call(Some($1), $3) }
   | postfix_expr DOT ID                     { Access($1, $3) }
   | primary_expr                            { $1 }
 
@@ -197,8 +198,8 @@ primary_expr:
   | id_expr                                 { $1 }
 
 id_expr:
-  | ID DOTDOT INT_LIT                       { Lookback($1, $3) }
-  | id                                      { $1 }
+  | id_ns DOTDOT INT_LIT                       { Lookback($1, $3) }
+  | id_ns                                      { Id($1) }
 
 
 /* function argument rules */
@@ -272,7 +273,7 @@ typ:
   | unit_t                                  { $1 }
 
 unit_t:
-  | STRUCT ID                               { Struct($2) } /* user defined structs */
+  | STRUCT id_ns                            { Struct($2) } /* user defined structs */
   | primitive_t                             { $1 }
 
 primitive_t:
@@ -306,8 +307,8 @@ lit:
   | INT_LIT                                 { LitInt($1) }
 
 struct_lit:  
-  | ID LBRACE struct_lit_fields RBRACE         { LitStruct($1, $3) }
-  | ID LBRACE RBRACE                           { LitStruct($1, []) }
+  | id_ns LBRACE struct_lit_fields RBRACE   { LitStruct($1, $3) }
+  | id_ns LBRACE RBRACE                     { LitStruct($1, []) }
 
 struct_lit_fields:
   | struct_lit_field SEMI struct_lit_fields { $1::$3 }
@@ -327,7 +328,6 @@ lit_elements:
   | lit_elements COMMA expr                 { $3::$1 }
   | expr                                    { [$1] }
 
-
-/* Type wrappers */
-id:
-  | ID                                      { Id($1) }
+id_ns:
+  | ID ARROW id_ns                          { $1::$3 }
+  | ID                                      { [$1] }

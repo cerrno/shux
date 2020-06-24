@@ -1,0 +1,19 @@
+kn main() int {
+   int a = 5;
+   int b = if (a == 0) then
+      5
+   else
+      3;
+     
+   var int c = 5;
+
+   if (a == 5) then
+      (if (b > 2) then
+          (c = 3)
+       else
+          (c = -1))
+   else
+      (c = 42);
+      
+   0
+}

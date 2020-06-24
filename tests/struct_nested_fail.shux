@@ -1,0 +1,19 @@
+struct foo {
+   struct bar {
+      int x;
+      scalar y;
+   }
+
+   struct baz {
+      struct foo {
+         scalar x;
+	      scalar y;
+      }
+
+      string str;
+   }
+}
+
+kn main() int {
+   0
+}

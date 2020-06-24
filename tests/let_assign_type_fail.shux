@@ -1,0 +1,7 @@
+let int a = 5;
+
+kn main() int {
+   int b = a;
+   scalar c = a; /* should fail */
+   0
+}

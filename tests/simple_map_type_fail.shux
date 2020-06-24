@@ -1,0 +1,11 @@
+kn main() scalar {
+   int[5] a = [1,2,3,4,5];
+   int[5] b;
+
+   var scalar sum = 0;
+   a @ (scalar v) -> {
+      sum = sum + v;
+   };
+
+   sum
+}

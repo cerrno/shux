@@ -1,0 +1,11 @@
+kn main() int {
+   int[5] a = [1,2,3,4,5];
+   int[5] b;
+   
+   var int sum = 0;
+   a @ (int v) -> {
+      sum = sum + v;
+   };
+
+   sum
+ }

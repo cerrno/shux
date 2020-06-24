@@ -1,7 +1,0 @@
-ns foo = {
-	let int bar  = 4;
-}
-
-kn main() int {
-	0
-}

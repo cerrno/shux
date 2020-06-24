@@ -1,0 +1,20 @@
+extern print(string s);
+extern graphics_init(string title, int window_w, int window_h);
+extern graphics_loop(_ptr render_func, _ptr update_func);
+extern graphics_set_points(scalar[][] buffer);
+
+kn my_render() {
+   scalar[2][2] points = [[1,2],[3,4]];
+   graphics_set_points(points);
+}
+
+kn my_update() {
+   print("in update loop");
+}
+
+kn main() int {
+   graphics_init("shux Demo", 150, 100);
+   graphics_loop(my_render, my_update);
+
+   0
+}

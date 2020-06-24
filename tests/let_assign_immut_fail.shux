@@ -1,0 +1,8 @@
+let int a = 5;
+
+kn main() int {
+   int b = 3;
+   a = b; /* should fail */
+   0
+}
+   

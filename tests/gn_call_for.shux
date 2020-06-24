@@ -1,0 +1,14 @@
+let int x = 5;
+
+gn foo() int {
+   x
+}
+
+kn bar(int x) int {
+   0
+}
+
+kn main() int {
+   for 5 foo() @ bar;
+   0
+}

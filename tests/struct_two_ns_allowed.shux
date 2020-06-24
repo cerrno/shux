@@ -1,0 +1,19 @@
+ns foo = {
+   struct p {
+      int x;
+      int y;
+   }
+}
+
+ns bar = {
+   struct p {
+      int x;
+      int y;
+   }
+}
+
+kn main() int {
+   struct foo->p foo_p = foo->p { .x=0; .y=0 };
+   struct bar->p bar_p = bar->p { .x=0; .y=0 };
+   0
+}

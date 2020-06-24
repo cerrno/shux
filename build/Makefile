@@ -1,6 +1,6 @@
 CAMLC=ocamlc
 OCAML=ocamlfind $(CAMLC) -linkpkg -thread -package core -package llvm -package llvm.analysis
-OBJS=exceptions.cmo sast.cmo ast.cmo astprint.cmo scanner.cmo parser.cmo semant.cmo codegen.cmo ast_sast.cmo sast_cast.cmo
+OBJS=exceptions.cmo sast.cmo ast.cmo astprint.cmo scanner.cmo parser.cmo semant.cmo ast_sast.cmo sast_cast.cmo llast.cmo lltranslate.cmo cast_llast.cmo
 INCLUDE=-I ../src/include -g
 OCAML_FLAGS=$(INCLUDE) $(OBJS)
 EXAMPLES=../examples
@@ -27,6 +27,9 @@ symlink:
 	$(SYMLINK) ../src/backend/ast_sast.ml ast_sast.ml
 	$(SYMLINK) ../src/shuxc.ml shuxc.ml
 	$(SYMLINK) ../src/frontend/astprint.ml astprint.ml
+	$(SYMLINK) ../src/backend/llast.mli llast.ml
+	$(SYMLINK) ../src/backend/cast_llast.ml cast_llast.ml
+	$(SYMLINK) ../src/backend/lltranslate.ml lltranslate.ml
 
 shuxc.native:
 	ocamlbuild -use-ocamlfind -tag thread -pkgs llvm,llvm.analysis,core -cflags -w,+a-4 shuxc.native
@@ -54,45 +57,52 @@ ast_sast.cmo : sast.cmo ast.cmo
 ast_sast.cmx : sast.cmx ast.cmx
 cast.cmo : sast.cmo
 cast.cmx : sast.cmx
-codegen.cmo : ast.cmo
-codegen.cmx : ast.cmx
 exceptions.cmo :
 exceptions.cmx :
 parser.cmo : ast.cmo parser.cmi
 parser.cmx : ast.cmx parser.cmi
 sast_cast.cmo : sast.cmo cast.cmo
 sast_cast.cmx : sast.cmx cast.cmx
+cast_llast.cmo: cast.cmo llast.cmo
+cast_llast.cmx: cast.cmx llast.cmx
 sast.cmo :
 sast.cmx :
+llast.cmo:
+llast.cmx:
+lltranslate.cmo: llast.cmo
+lltranslate.cmx: llast.cmx
 scanner.cmo : parser.cmi exceptions.cmo
 scanner.cmx : parser.cmx exceptions.cmx
 semant.cmo : sast.cmo astprint.cmo ast.cmo
 semant.cmx : sast.cmx astprint.cmx ast.cmx
 shuxc.cmo : semant.cmo scanner.cmo sast_cast.cmo parser.cmi codegen.cmo \
-    astprint.cmo ast_sast.cmo
+    astprint.cmo ast_sast.cmo cast_llast.cmo
 shuxc.cmx : semant.cmx scanner.cmx sast_cast.cmx parser.cmx codegen.cmx \
-    astprint.cmx ast_sast.cmx
+    astprint.cmx ast_sast.cmx cast_llast.cmx
 parser.cmi : ast.cmo
 .PHONY: all clean cleanall autoclean hello test
 
 all: cleanall symlink $(OBJS) $(TARGETS)
 
-cleanall:
+cleanall: cleantests
 	rm -rf *.* shuxc
-	cd $(TEST_DIR) && rm -rf *.ll && rm -rf *.out
 
-clean:
+clean: cleantests
 	rm -rf *.cmx *.cmi *.cmo *.cmx *.o parser.ml parser.mli scanner.ml shuxc
-	cd $(TEST_DIR) && rm -rf *.ll && rm -rf *out
+
+cleantests:
+	cd $(TEST_DIR) && rm -rf *.ll && rm -rf *.out
 
 autoclean:
 	ocamlbuild -clean
 
 hello: $(COMPILER) $(EXAMPLES)/hello_world.shux
-	./shuxc $(EXAMPLES)/hello_world.shux > hello_world.ll
-	lli hello_world.ll
+	./shuxc $(EXAMPLES)/nstest.shux > nstest.ll
+	cat nstest.ll
+	lli nstest.ll
 
-tests:
-	cp shuxc ../tests/shuxc
-	@cd $(TEST_DIR) && ./$(TEST)
+tests: cleantests
+	@cd $(TEST_DIR) && $(SYMLINK) ../build/shuxc shuxc && ./$(TEST)
 
+tests_front: cleantests
+	@cd $(TEST_DIR) && $(SYMLINK) ../build/shuxc shuxc && ./$(TEST) COMPILE

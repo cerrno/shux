@@ -1,0 +1,10 @@
+kn main() int {
+   int[5] a = [1,2,3,4,5];
+   scalar[5] b;
+
+   b = a @ (int v) -> {
+      v + 1
+   };
+
+   0
+}

@@ -1,0 +1,6 @@
+kn main() int {
+   int a = 3;
+   int b = 5;
+   int z = (a == b) ? 5 : (a > b) ? 3 : 2;
+   z
+}

@@ -1,0 +1,9 @@
+let int a = 5;
+
+gn foo(int a, int b) int {
+   b
+}
+
+kn main() int {
+   0
+}

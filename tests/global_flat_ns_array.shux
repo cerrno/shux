@@ -1,0 +1,7 @@
+ns foo = {
+   let string[4] bar = ["b", "c", "e", "d"];
+}
+
+kn main() int {
+   0
+}

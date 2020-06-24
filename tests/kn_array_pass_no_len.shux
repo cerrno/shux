@@ -1,0 +1,7 @@
+kn foo(int[] a) int {
+   a[0]
+}
+
+kn main() int {
+   0
+}

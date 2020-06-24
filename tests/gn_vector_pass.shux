@@ -1,0 +1,7 @@
+gn foo(vector<2> a, vector<2> b) scalar {
+   a[0] + b[0]
+}
+
+kn main() int {
+   0
+}

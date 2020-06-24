@@ -1,5 +1,5 @@
 kn main() int {
-   bool x = true;
+   var bool x = true;
    x = 23.53452;
    0
 }

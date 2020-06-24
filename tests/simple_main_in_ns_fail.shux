@@ -1,0 +1,6 @@
+ns potato = {
+   /* if this is allowed, it is very bad form... */
+   kn main() int {
+      0
+   }
+}

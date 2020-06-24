@@ -1,0 +1,10 @@
+struct particle {
+   int x;
+   int y;
+}
+
+kn main() int {
+   var struct particle dummy = particle { .x=1; .y=2 };
+   dummy.x = 4.0;
+   0
+}

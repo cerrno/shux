@@ -1,0 +1,13 @@
+gn foo() int {
+   int x = x..1 + 1 : 0;
+   x
+}
+
+kn bar(int x) int {
+   0
+}
+
+kn main() int {
+   for 5 foo(); /* needs @ and function */
+   0
+}

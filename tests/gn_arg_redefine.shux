@@ -1,0 +1,8 @@
+gn foo(int a) int {
+   int a = 5;
+   0
+}
+
+kn main() int {
+   0
+}

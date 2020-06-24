@@ -1,0 +1,13 @@
+struct bar {
+   scalar y;
+   scalar n;
+}
+
+struct foo {
+   int x;
+   struct bar b;
+}
+
+kn main() int {
+   0
+}

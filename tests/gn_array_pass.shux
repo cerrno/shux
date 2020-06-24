@@ -1,0 +1,7 @@
+gn foo(int[2] a) int {
+   a[0]
+}
+
+kn main() int {
+   0
+}

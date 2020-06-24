@@ -14,13 +14,18 @@ let string_of_opt_default d f = function
 
 let string_of_opt f s = string_of_opt_default "" f s
 
+let rec string_of_id = function
+  | [] -> ""
+  | [s] -> s
+  | s::l -> s ^ "->" ^ string_of_id l
+
 let rec _string_of_typ = function
   | Int -> "int"
   | Float -> "float"
   | String -> "string"
   | Bool -> "bool" 
   | Ptr -> "_ptr"
-  | Struct t -> "struct " ^ t 
+  | Struct t -> "struct " ^ string_of_id t 
   | Array(t, i) -> _string_of_typ t ^ "[" ^ (match i with Some(n) -> string_of_int n | None -> "") ^ "]"
   | Vector t -> "vector<" ^ string_of_int t ^ ">"
   | Void -> "__void__" (* should not be used *)
@@ -114,17 +119,17 @@ and string_of_lit = function
   | LitKn(l) -> string_of_lambda l
   | LitVector(l) -> string_of_list string_of_expr l "<" ", " ">" true
   | LitArray(l) -> string_of_list string_of_expr l "[" ", " "]" true
-  | LitStruct(id, l) -> id ^ string_of_list string_of_struct_field l "{" ";\n" "}" true
+  | LitStruct(id, l) -> string_of_id id ^ string_of_list string_of_struct_field l "{" ";\n" "}" true
 
 and string_of_expr = function
  | Lit l -> string_of_lit l
- | Id s -> s
- | Lookback(s, i) -> s ^ ".." ^ string_of_int i
+ | Id s -> string_of_id s
+ | Lookback(s, i) -> string_of_id s ^ ".." ^ string_of_int i
  | Access(e, i) -> string_of_expr e ^ "." ^ i
  | Uniop(o, e) -> string_of_uniop_expr string_of_expr o e
  | Assign(l, r) -> string_of_asn_expr string_of_expr l r
  | Binop(e1, o, e2) -> string_of_binop_expr string_of_expr e1 o e2
- | Call(s, el) -> string_of_opt_default "_" nop s ^ 
+ | Call(s, el) -> string_of_opt_default "_" string_of_id s ^ 
                   string_of_list string_of_expr el "(" ", " ")" (is_some s)
  | LookbackDefault(l, e) -> string_of_lookback_default_expr string_of_expr l e
  | Cond(i, t, e) -> string_of_cond_expr string_of_expr i t e

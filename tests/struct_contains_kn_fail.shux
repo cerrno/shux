@@ -1,0 +1,9 @@
+struct bad {
+   kn foo() int {
+      0
+   }
+}
+
+kn main() int {
+   0
+}

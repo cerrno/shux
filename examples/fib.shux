@@ -1,0 +1,9 @@
+gn fib() int { 
+	int y = (y..1 : 1) + (y..2 : 1);
+	y
+}
+
+kn main() int { 
+	int fib5 = do 5 fib();
+	0
+}

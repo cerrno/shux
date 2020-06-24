@@ -1,0 +1,20 @@
+ns foo = {
+   struct p {
+      int x;
+      int y;
+   }
+}
+
+ns bar = {
+   struct p {
+      int x;
+      int y;
+   }
+}
+
+kn main() int {
+   var struct foo->p foo_p = struct foo->p { .x=0, .y=0 };
+   var struct bar->p bar_p = struct bar->p { .x=0, .y=0 };
+   foo_p = bar_p; /* this line should fail */
+   0
+}

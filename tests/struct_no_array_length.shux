@@ -1,0 +1,7 @@
+struct foo {
+   int[] arr;
+}
+
+kn main() int {
+   0
+}

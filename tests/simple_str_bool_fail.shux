@@ -1,5 +1,5 @@
 kn main() int {
-   string x = "hi";
+   var string x = "hi";
    x = true;
    0
 }

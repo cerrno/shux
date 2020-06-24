@@ -1,0 +1,29 @@
+let scalar dt = 0.01;
+let scalar g = -9.81;
+
+/* 1D particle data structure with pos and vel */
+struct particle {
+   scalar x;
+   scalar v;
+}
+
+gn euler(struct particle[1000] init) struct particle[1000] {
+      struct particle[1000] pbuf = (pbuf..1 : init) @ (struct particle p) -> {
+      particle {
+         .v = p.v + g * dt;
+	       .x = p.x + p.v * dt
+      }
+   };
+	pbuf
+}
+
+kn main() int {
+  var struct particle[1] p_init = [ particle { .v=1.0; .x=0.0}];
+  struct particle[1000] euler = do 1000 euler(p_init); 
+  euler @ (struct particle state) -> {
+  /* opengl bindings */
+			state
+     }; 
+   0
+}
+   

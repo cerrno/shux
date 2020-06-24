@@ -87,7 +87,7 @@ rule token = parse
   | ':'     { COLON }
   | "::"    { FILTER }
   | '@'     { MAP }
-  | "->"    { FUNC }
+  | "->"    { ARROW }
 
 (* control keywords *)
   | "if"      { IF }
@@ -97,7 +97,7 @@ rule token = parse
   | "for"     { FOR }
   | "while"   { WHILE }
   | "do"      { DO }
-
+  | "noop"    { PASS } 
 (* declarations *)
   | "ns"      { NS }
   | "gn"      { GN }

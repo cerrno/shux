@@ -1,0 +1,9 @@
+struct particle {
+   int x;
+   int y;
+}
+let struct particle dummy = particle { .x=1.0; .y="potato" };
+
+kn main() int {
+   0
+}

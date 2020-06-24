@@ -1,0 +1,10 @@
+gn test(int x) int {
+    int a = x;
+    a = 2;
+    a
+}
+
+kn main() int {
+   0
+}
+

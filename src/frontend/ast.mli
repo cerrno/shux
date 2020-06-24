@@ -5,7 +5,7 @@ type typ =
   | Float
   | String
   | Bool
-  | Struct of string (* struct identifier *)
+  | Struct of string list (* struct identifier *)
   | Array of typ * int option
   | Vector of int (* number of elements in vector *)
   | Ptr
@@ -46,17 +46,17 @@ and lit =
   | LitKn of lambda
   | LitVector of expr list
   | LitArray of expr list (* include optional type annotation here? *)
-  | LitStruct of string * struct_field list (* should this be more sophisticated? *)
+  | LitStruct of string list * struct_field list (* should this be more sophisticated? *)
 
 and struct_field = StructField of string * expr
 
 and expr =
   | Lit of lit
-  | Id of string
-  | Lookback of string * int
+  | Id of string list
+  | Lookback of string list * int
   | Binop of expr * bin_op * expr
   | Assign of expr * expr
-  | Call of string option * expr list
+  | Call of string list option * expr list
   | Uniop of un_op * expr
   | LookbackDefault of expr * expr
   | Cond of expr * expr * expr (* technically Ternop *)

@@ -1,0 +1,8 @@
+ns foo = {
+   let int[2] a = [2,4];
+}
+
+kn main() int {
+   int b = foo->a[0];
+   0
+}

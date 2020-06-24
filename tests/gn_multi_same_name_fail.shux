@@ -1,0 +1,11 @@
+gn foo(int a) int {
+   0
+}
+
+gn foo(scalar b, scalar c) int {
+   0
+}
+
+kn main() int {
+   0
+}

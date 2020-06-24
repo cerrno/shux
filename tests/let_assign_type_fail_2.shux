@@ -1,0 +1,7 @@
+let scalar p = 24.5445;
+
+kn main() int {
+    var string s = "potato";
+    s = p;
+    0
+}

@@ -1,5 +1,5 @@
 kn main() int {
-   int x = 1;
+   var int x = 1;
    x = false;
    0
 }

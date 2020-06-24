@@ -1,0 +1,4 @@
+kn main() int {
+   var int[2] a = [2,3];
+   0
+}

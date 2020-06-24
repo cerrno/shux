@@ -1,5 +1,5 @@
 kn main() int {
-   scalar x = 1.0;
+   var scalar x = 1.0;
    x = "hi";
    0
 }

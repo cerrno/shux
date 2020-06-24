@@ -1,0 +1,10 @@
+struct particle {
+   int x;
+   int y;
+}
+
+kn main() int {
+   struct particle dummy = particle { .x=1; .y=2 };
+   string p = dummy.x;
+   0
+}

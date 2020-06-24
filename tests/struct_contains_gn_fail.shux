@@ -1,0 +1,9 @@
+struct bad {
+    gn foo(int x, int y) int {
+       x*y
+    }
+}
+
+kn main() int {
+   0
+}

@@ -1,0 +1,5 @@
+kn main() int {
+   int a = 5;
+   int b = if a == 0 then 5 else 3;
+   0
+}

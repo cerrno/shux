@@ -1,0 +1,5 @@
+S src/frontend
+S src/backend
+S src/
+B build/
+PKG llvm

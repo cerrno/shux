@@ -1,0 +1,6 @@
+kn main() int {
+   int a = 3;
+   int b = 5;
+   int z = (a == b) ? 0 : 7;
+   z
+}

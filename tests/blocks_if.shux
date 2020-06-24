@@ -1,0 +1,12 @@
+kn print(string a) {
+}
+
+kn main() int {
+   int a = 5;
+   if (a > 3) then
+			print("bla")
+   else
+      noop;
+   0
+}
+       

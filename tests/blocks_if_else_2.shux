@@ -1,0 +1,7 @@
+kn main() int {
+   int a = 5;
+   int b = 3;
+   var int c = 0;
+   if(a == b) then (c = 6) else (c = 2);
+   c
+}

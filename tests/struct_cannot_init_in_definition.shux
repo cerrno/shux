@@ -1,0 +1,8 @@
+struct foo {
+   int a;
+   int b = 5;
+}
+
+kn main() int {
+   0
+}

@@ -1,7 +1,11 @@
 type sscope = (* replacing Mutable vs Immutable *)
-  | SLocalVal | SLocalVar | SGlobal | SStructField
+  | SLocalVal
+  | SLocalVar
+  | SGlobal
+  | SStructField
+  | SKnLambda of sbind list
 
-type styp =
+and styp =
   | SInt
   | SFloat
   | SString
@@ -15,11 +19,11 @@ and sbind = SBind of styp * string * sscope
 
 type sbin_op_i =
   | SAddi | SSubi | SMuli | SDivi | SMod | SExpi
-  | SEqi | SLti | SNeqi | SLeqi | SGeqi
+  | SEqi | SLti | SGti | SNeqi | SLeqi | SGeqi
 
 type sbin_op_f =
   | SAddf | SSubf | SMulf | SDivf | SExpf
-  | SEqf | SLtf | SNeqf | SLeqf | SGeqf
+  | SEqf | SLtf | SGtf | SNeqf | SLeqf | SGeqf
 
 type sbin_op_b =
   | SLogAnd | SLogOr
@@ -29,7 +33,9 @@ type sbin_op_p =
 
 type sbin_op_fn =
   | SFilter | SMap
-  | SFor | SDo
+
+type sbin_op_gn =
+  | SFor
 
 type sbin_op = 
   | SBinopInt of sbin_op_i
@@ -37,6 +43,7 @@ type sbin_op =
   | SBinopBool of sbin_op_b
   | SBinopPtr of sbin_op_p
   | SBinopFn of sbin_op_fn
+  | SBinopGn of sbin_op_gn
 
 type sun_op = 
   | SLogNot | SNegi | SNegf
@@ -48,7 +55,7 @@ type slit =
   | SLitStr of string
   | SLitKn of slambda
   | SLitArray of sexpr list 
-  | SLitStruct of (string * sexpr) list
+  | SLitStruct of string * ((string * sexpr) list)
 
 and sexpr =
   | SLit of styp * slit
@@ -57,18 +64,23 @@ and sexpr =
   | SAccess of styp * sexpr * string
   | SBinop of styp * sexpr * sbin_op * sexpr
   | SAssign of styp * sexpr * sexpr
-  | SKnCall of styp * string * sexpr list
-  | SGnCall of styp * string * sexpr list
+  | SKnCall of styp * string * (sexpr * styp) list
+  | SGnCall of styp * string * (sexpr * styp) list
+	| SExCall of styp * string * (sexpr * styp) list
   | SLookbackDefault of styp * int * sexpr * sexpr
   | SUnop of styp * sun_op * sexpr
   | SCond of styp * sexpr * sexpr * sexpr
+  | SLoopCtr (* CLoopCtr, useful for recursion *)
+  | SPeek2Anon of styp
+  | SExprDud
 
 and slambda = {
   slret_typ   : styp;
   slformals   : sbind list;
+  slinherit   : sbind list;
   sllocals    : sbind list;         (* no lookback, const-ness not enforced *)
   slbody      : (sexpr * styp) list;
-  slret_expr  : (sexpr * styp);
+  slret_expr  : (sexpr * styp) option;
 }
 
 type skn_decl = {
@@ -77,7 +89,7 @@ type skn_decl = {
   skformals   : sbind list;
   sklocals    : sbind list;         (* do not have lookback *)
   skbody      : (sexpr * styp) list;
-  skret_expr  : (sexpr * styp);
+  skret_expr  : (sexpr * styp) option;
 }
 
 type sgn_decl = {
@@ -88,12 +100,13 @@ type sgn_decl = {
   sglocalvals : sbind list;
   sglocalvars : sbind list;
   sgbody      : (sexpr * styp) list;
-  sgret_expr  : (sexpr * styp);
+  sgret_expr  : (sexpr * styp) option;
 }
 
 type sfn_decl =
   | SGnDecl of sgn_decl
   | SKnDecl of skn_decl
+  | SExDud of skn_decl
 
 type sstruct_def = {
   ssname      : string;

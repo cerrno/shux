@@ -1,0 +1,9 @@
+ns foo = {
+   int[] a = [2,4];
+}
+
+kn main() int {
+   int b = foo->a[0];
+   foo->a[1] = 5; /* should fail */
+   0
+}

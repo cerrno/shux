@@ -11,6 +11,9 @@ Smoothed Particle Hydrodynamics will henceforth be the bane of our existence.
 - Mert Ussakli
 - Andy Xu
 
+# License
+[MIT](https://lucasschuermann.com/license.txt)
+
 # Compiling
 
 Run the `install_deps.sh` script to set up submodules, install OCaml, and install third-party libraries.

@@ -7,7 +7,7 @@ Smoothed Particle Hydrodynamics will henceforth be the bane of our existence.
 
 # Language Reference Manual
 
-The language reference manual for shux can be found [here](http://www.cs.columbia.edu/~sedwards/classes/2017/4115-spring/lrms/shux.pdf)
+The language reference manual for shux can be found [here](https://github.com/cerrno/shux/blob/master/shux%20lrm.pdf)
 # Authors
 - [Lucas Schuermann](http://lvs.io/)
 - John Hui

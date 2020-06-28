@@ -15,7 +15,7 @@ The language reference manual for shux can be found [here](https://github.com/ce
 - Andy Xu
 
 # License
-[View license](https://lucasschuermann.com/license.txt)
+[MIT](https://lucasschuermann.com/license.txt)
 
 # Compiling
 
